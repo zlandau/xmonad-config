@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Actions.CycleWS
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.SinkAll
 import XMonad.Config.Gnome
@@ -12,8 +13,12 @@ import qualified XMonad.StackSet as W
 myWorkspaces = ["1", "2", "3", "4", "5"]
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. shiftMask, xK_t     ), sinkAll)
-    , ((modm,               xK_w     ), scratchpadSpawnAction conf)
+    [ ((modm .|. shiftMask, xK_t            ), sinkAll)
+    , ((modm,               xK_w            ), scratchpadSpawnAction conf)
+    , ((modm,               xK_bracketright ), nextScreen )
+    , ((modm,               xK_bracketleft  ), prevScreen )
+    , ((modm .|. shiftMask, xK_bracketright ), shiftNextScreen )
+    , ((modm .|. shiftMask, xK_bracketleft  ), shiftPrevScreen )
     ]
     ++
 
