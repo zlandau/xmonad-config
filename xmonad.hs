@@ -26,6 +26,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_bracketleft  ), shiftPrevScreen )
     , ((modm,               xK_s            ), promptSearch defaultXPConfig iddg )
     , ((modm .|. shiftMask, xK_s            ), selectSearch iddg )
+    , ((modm,               xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm .|. shiftMask, xK_p            ), spawn "gnome-launch-box" )
     ]
     ++
 
