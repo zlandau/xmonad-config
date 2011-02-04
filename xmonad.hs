@@ -1,16 +1,21 @@
 import XMonad
 import XMonad.Actions.CycleWS
 import XMonad.Actions.PhysicalScreens
+import XMonad.Actions.Search
 import XMonad.Actions.SinkAll
 import XMonad.Config.Gnome
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.DwmStyle
 import XMonad.Layout.IndependentScreens
+import XMonad.Prompt
 import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
 myWorkspaces = ["1", "2", "3", "4", "5"]
+
+duckduckgo = searchEngine "ddg" "https://duckduckgo.com/?q="
+iddg = intelligent duckduckgo
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_t            ), sinkAll)
@@ -19,6 +24,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_bracketleft  ), prevScreen )
     , ((modm .|. shiftMask, xK_bracketright ), shiftNextScreen )
     , ((modm .|. shiftMask, xK_bracketleft  ), shiftPrevScreen )
+    , ((modm,               xK_s            ), promptSearch defaultXPConfig iddg )
+    , ((modm .|. shiftMask, xK_s            ), selectSearch iddg )
     ]
     ++
 
