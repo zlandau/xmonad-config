@@ -8,6 +8,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Layout.DwmStyle
 import XMonad.Layout.IndependentScreens
 import XMonad.Prompt
+import XMonad.Prompt.AppLauncher as AL
 import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
@@ -28,6 +29,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_s            ), selectSearch iddg )
     , ((modm,               xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm .|. shiftMask, xK_p            ), spawn "gnome-launch-box" )
+    , ((modm,               xK_e            ), AL.launchApp defaultXPConfig "tomboy --search" )
+    , ((modm .|. shiftMask, xK_e            ), spawn "tomboy --new-note" )
     ]
     ++
 
