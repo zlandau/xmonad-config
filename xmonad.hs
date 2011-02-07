@@ -29,8 +29,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_s            ), selectSearch iddg )
     , ((modm,               xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm .|. shiftMask, xK_p            ), spawn "gnome-launch-box" )
-    , ((modm,               xK_e            ), AL.launchApp defaultXPConfig "tomboy --search" )
-    , ((modm .|. shiftMask, xK_e            ), spawn "tomboy --new-note" )
+    --, ((modm,               xK_b            ), AL.launchApp defaultXPConfig "tomboy" )
+    , ((modm,               xK_b            ), spawn "tomboy-panel" )
+    , ((modm .|. shiftMask, xK_b            ), spawn "tomboy --new-note" )
     ]
     ++
 
