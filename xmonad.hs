@@ -17,6 +17,7 @@ myWorkspaces = ["1", "2", "3", "4", "5"]
 
 duckduckgo = searchEngine "ddg" "https://duckduckgo.com/?q="
 iddg = intelligent duckduckgo
+isearch = intelligent google
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_t            ), sinkAll)
@@ -25,8 +26,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_bracketleft  ), prevScreen )
     , ((modm .|. shiftMask, xK_bracketright ), shiftNextScreen )
     , ((modm .|. shiftMask, xK_bracketleft  ), shiftPrevScreen )
-    , ((modm,               xK_s            ), promptSearch defaultXPConfig iddg )
-    , ((modm .|. shiftMask, xK_s            ), selectSearch iddg )
+    , ((modm,               xK_s            ), promptSearch defaultXPConfig isearch )
+    , ((modm .|. shiftMask, xK_s            ), selectSearch isearch )
     , ((modm,               xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm .|. shiftMask, xK_p            ), spawn "gnome-launch-box" )
     --, ((modm,               xK_b            ), AL.launchApp defaultXPConfig "tomboy" )
