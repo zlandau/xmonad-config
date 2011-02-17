@@ -9,7 +9,6 @@ import XMonad.Layout.DwmStyle
 import XMonad.Layout.IndependentScreens
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
-import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
