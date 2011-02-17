@@ -49,7 +49,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 newKeys x = M.union (myKeys x) (keys gnomeConfig x)
 
-myManageHook = scratchpadManageHookDefault <+> manageDocks
+myManageHook = composeAll . concat $
+	[ [manageDocks]
+	, [ title 		=? t --> doFloat | t <- titleFloats ]
+	, [ className   =? c --> doFloat | c <- classFloats ] ]
+	where
+		titleFloats = ["Quick Tabs"]
+		classFloats = []
+
 
 main = do
   nScreens <- countScreens
