@@ -9,7 +9,6 @@ import XMonad.Layout.DwmStyle
 import XMonad.Layout.IndependentScreens
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
-import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -21,7 +20,6 @@ isearch = intelligent google
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_t            ), sinkAll)
-    , ((modm,               xK_w            ), scratchpadSpawnAction conf)
     , ((modm,               xK_bracketright ), nextScreen )
     , ((modm,               xK_bracketleft  ), prevScreen )
     , ((modm .|. shiftMask, xK_bracketright ), shiftNextScreen )
