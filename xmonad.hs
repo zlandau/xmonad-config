@@ -12,7 +12,7 @@ import XMonad.Prompt.AppLauncher as AL
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
-myWorkspaces = ["1", "2", "3", "4", "5"]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 duckduckgo = searchEngine "ddg" "https://duckduckgo.com/?q="
 iddg = intelligent duckduckgo
