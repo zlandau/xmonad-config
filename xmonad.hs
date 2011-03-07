@@ -27,7 +27,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_s            ), promptSearch defaultXPConfig isearch )
     , ((modm .|. shiftMask, xK_s            ), selectSearch isearch )
     , ((modm,               xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((modm .|. shiftMask, xK_p            ), spawn "gnome-launch-box" )
+    , ((modm .|. shiftMask, xK_p            ), spawn "gnome-do")
     --, ((modm,               xK_b            ), AL.launchApp defaultXPConfig "tomboy" )
     , ((modm,               xK_b            ), spawn "tomboy-panel" )
     , ((modm .|. shiftMask, xK_b            ), spawn "tomboy --new-note" )
@@ -47,14 +47,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 newKeys x = M.union (myKeys x) (keys gnomeConfig x)
 
-myManageHook = composeAll . concat $
-	[ [manageDocks]
-	, [ title 		=? t --> doFloat | t <- titleFloats ]
-	, [ className   =? c --> doFloat | c <- classFloats ] ]
-	where
-		titleFloats = ["Quick Tabs"]
-		classFloats = []
-
+myManageHook = composeAll
+	[ title     =? "Quick Tabs" --> doIgnore
+	, className =? "deskbar-applet" --> doIgnore
+	, resource =? "Do" --> doIgnore
+	, manageDocks
+	]
 
 main = do
   nScreens <- countScreens
@@ -63,6 +61,6 @@ main = do
        focusedBorderColor = "blue",
        workspaces = withScreens nScreens myWorkspaces,
        keys = newKeys,
-       manageHook = myManageHook,
+       manageHook = myManageHook <+> manageHook gnomeConfig,
        layoutHook = dwmStyle shrinkText defaultTheme (layoutHook gnomeConfig)
   }
