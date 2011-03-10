@@ -34,8 +34,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --, ((modm,               xK_b            ), AL.launchApp defaultXPConfig "tomboy" )
     , ((modm,               xK_b            ), spawn "tomboy-panel" )
     , ((modm .|. shiftMask, xK_b            ), spawn "tomboy --new-note" )
-    , ((modm,               xK_g            ), gotoMenu )
-    , ((modm .|. shiftMask, xK_g            ), bringMenu )
+    , ((modm,               xK_f            ), gotoMenu )
+    , ((modm .|. shiftMask, xK_f            ), bringMenu )
     ]
     ++
 
