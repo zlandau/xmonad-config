@@ -10,6 +10,7 @@ import XMonad.Layout.DwmStyle
 import XMonad.Layout.IndependentScreens
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
+import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
@@ -29,6 +30,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_s            ), selectSearch isearch )
     , ((modm .|. shiftMask, xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm,               xK_p            ), spawn "gnome-do")
+    , ((modm,               xK_o            ), scratchpadSpawnActionCustom "gnome-terminal --disable-factory --name scratchpad" )
     --, ((modm,               xK_b            ), AL.launchApp defaultXPConfig "tomboy" )
     , ((modm,               xK_b            ), spawn "tomboy-panel" )
     , ((modm .|. shiftMask, xK_b            ), spawn "tomboy --new-note" )
@@ -55,6 +57,7 @@ myManageHook = composeAll
 	, className =? "deskbar-applet" --> doIgnore
 	, resource =? "Do" --> doIgnore
 	, manageDocks
+	, scratchpadManageHookDefault
 	]
 
 main = do
