@@ -20,6 +20,8 @@ duckduckgo = searchEngine "ddg" "https://duckduckgo.com/?q="
 iddg = intelligent duckduckgo
 isearch = intelligent google
 
+scratchpadSpawn = "gnome-terminal --disable-factory --name scratchpad"
+
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_t            ), sinkAll)
     , ((modm,               xK_bracketright ), nextScreen )
@@ -30,8 +32,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_s            ), selectSearch isearch )
     , ((modm .|. shiftMask, xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm,               xK_p            ), spawn "gnome-do")
-    , ((modm,               xK_o            ), scratchpadSpawnActionCustom "gnome-terminal --disable-factory --name scratchpad" )
-    --, ((modm,               xK_b            ), AL.launchApp defaultXPConfig "tomboy" )
+    , ((modm,               xK_o            ), scratchpadSpawnActionCustom scratchpadSpawn )
     , ((modm,               xK_b            ), spawn "tomboy-panel" )
     , ((modm .|. shiftMask, xK_b            ), spawn "tomboy --new-note" )
     , ((modm,               xK_f            ), gotoMenu )
