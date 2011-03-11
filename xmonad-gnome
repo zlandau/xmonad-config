@@ -1,0 +1,4 @@
+#!/bin/bash
+export WINDOW_MANAGER=xmonad
+gconftool-2 -u /desktop/gnome/session/required_components/windowmanager
+gnome-session
