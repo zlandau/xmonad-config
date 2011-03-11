@@ -1,0 +1,12 @@
+xmonad-config
+=============
+
+This is a fairly straight forward Gnome-based xmonad configuration file. It has
+a little trickery to get Gnome to play nicely. There is probably a better way,
+but this works for me.
+
+Installation
+------------
+
+Copy xmonad-gnome.desktop into /usr/share/xsessions. Copy xmonad-gnome into
+/usr/local/bin and make sure it is executable.
