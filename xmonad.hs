@@ -38,18 +38,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_f            ), gotoMenu )
     , ((modm .|. shiftMask, xK_f            ), bringMenu )
     ]
-    ++
-
-    -- Don't switch monitors when selecting view
-    [((m .|. modm, k), windows $ onCurrentScreen f i)
-             | (i, k) <- zip (workspaces' conf) [xK_1 .. xK_9]
-             , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
-
-    -- Name screens by physical location, not ScreenID
-    [((m .|. modm, k), f sc)
-            | (k, sc) <- zip [xK_w, xK_e] [0..]
-            , (f, m) <- [(viewScreen, 0), (sendToScreen, shiftMask)]] 
 
 newKeys x = M.union (myKeys x) (keys gnomeConfig x)
 
@@ -66,7 +54,7 @@ main = do
   xmonad $ gnomeConfig {
        modMask = mod4Mask,
        focusedBorderColor = "blue",
-       workspaces = withScreens nScreens myWorkspaces,
+       workspaces = myWorkspaces,
        keys = newKeys,
        manageHook = myManageHook <+> manageHook gnomeConfig,
        layoutHook = dwmStyle shrinkText defaultTheme (layoutHook gnomeConfig)
