@@ -14,7 +14,7 @@ import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
-myWorkspaces = ["1", "2", "3", "4", "5"]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 duckduckgo = searchEngine "ddg" "https://duckduckgo.com/?q="
 iddg = intelligent duckduckgo
@@ -30,8 +30,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_bracketleft  ), shiftPrevScreen )
     , ((modm,               xK_s            ), promptSearch defaultXPConfig isearch )
     , ((modm .|. shiftMask, xK_s            ), selectSearch isearch )
-    , ((modm .|. shiftMask, xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
-    , ((modm,               xK_p            ), spawn "gnome-do")
+    , ((modm,   		    xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm .|. shiftMask, xK_p            ), spawn "gnome-do")
     , ((modm,               xK_o            ), scratchpadSpawnActionCustom scratchpadSpawn )
     , ((modm,               xK_b            ), spawn "tomboy-panel" )
     , ((modm .|. shiftMask, xK_b            ), spawn "tomboy --new-note" )
