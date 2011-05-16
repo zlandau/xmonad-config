@@ -43,7 +43,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_bracketleft  ), shiftPrevScreen )
     , ((modm,               xK_s            ), promptSearch defaultXPConfig isearch )
     , ((modm .|. shiftMask, xK_s            ), selectSearch isearch )
-    , ((modm,   		    xK_p            ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm,               xK_p            ), spawn "dmenu_run")
     , ((modm .|. shiftMask, xK_p            ), spawn "gnome-do")
     , ((modm,               xK_o            ), scratchpadSpawnActionCustom scratchpadSpawn )
     , ((modm,               xK_b            ), spawn "tomboy-panel" )
