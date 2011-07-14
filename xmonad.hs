@@ -1,14 +1,21 @@
-import XMonad
+import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
 import XMonad.Actions.GridSelect
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.Search
 import XMonad.Actions.SinkAll
 import XMonad.Actions.WindowBringer
+import XMonad.Config.Desktop
 import XMonad.Config.Gnome
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.Combo
+import XMonad.Layout.DragPane
 import XMonad.Layout.DwmStyle
 import XMonad.Layout.IndependentScreens
+import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.Named
+import XMonad.Layout.NoBorders
+import XMonad.Layout.ResizableTile
 import XMonad.Prompt
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
@@ -55,6 +62,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_m            ), workspacePrompt defaultXPConfig (windows . W.view))
     , ((modm .|. shiftMask, xK_m            ), workspacePrompt defaultXPConfig (windows . W.shift))
     , ((modm,               xK_w            ), goToSelected defaultGSConfig)
+    , ((modm,               xK_a            ), sendMessage $ JumpToLayout "term" )
     ]
 
 newKeys x = M.union (myKeys x) (keys gnomeConfig x)
@@ -67,6 +75,15 @@ myManageHook = composeAll
 	, scratchpadManageHookDefault
 	]
 
+myLayout = dwmStyle shrinkText defaultTheme
+                $ desktopLayoutModifiers
+                $ layoutHook gnomeConfig
+                ||| custom
+            where tall = ResizableTall 1 (3/100) (1/2) []
+                  term = named "term" $ tall ****//* Full
+                  full = noBorders Full
+                  custom = term ||| full
+
 main = do
   nScreens <- countScreens
   xmonad $ gnomeConfig {
@@ -75,5 +92,5 @@ main = do
        workspaces = myWorkspaces,
        keys = newKeys,
        manageHook = myManageHook <+> manageHook gnomeConfig,
-       layoutHook = dwmStyle shrinkText defaultTheme (layoutHook gnomeConfig)
+       layoutHook = myLayout
   }
