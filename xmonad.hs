@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Actions.CycleWS
+import XMonad.Actions.GridSelect
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.Search
 import XMonad.Actions.SinkAll
@@ -52,6 +53,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_f            ), bringMenu )
     , ((modm,               xK_m            ), workspacePrompt defaultXPConfig (windows . W.view))
     , ((modm .|. shiftMask, xK_m            ), workspacePrompt defaultXPConfig (windows . W.shift))
+    , ((modm,               xK_w            ), goToSelected defaultGSConfig)
     ]
 
 newKeys x = M.union (myKeys x) (keys gnomeConfig x)
