@@ -28,6 +28,7 @@ myWorkspaces =
 	, "im"
 	, "notes"
 	, "misc"
+	, "music"
     ]
 
 duckduckgo = searchEngine "ddg" "https://duckduckgo.com/?q="
