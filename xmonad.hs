@@ -16,6 +16,7 @@ import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.WindowNavigation
 import XMonad.Prompt
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
@@ -63,6 +64,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_m            ), workspacePrompt defaultXPConfig (windows . W.shift))
     , ((modm,               xK_w            ), goToSelected defaultGSConfig)
     , ((modm,               xK_a            ), sendMessage $ JumpToLayout "term" )
+    , ((modm .|. shiftMask, xK_Right), sendMessage $ Move R)
+    , ((modm .|. shiftMask, xK_Left ), sendMessage $ Move L)
+    , ((modm .|. shiftMask, xK_Up   ), sendMessage $ Move U)
+    , ((modm .|. shiftMask, xK_Down ), sendMessage $ Move D)
     ]
 
 newKeys x = M.union (myKeys x) (keys gnomeConfig x)
@@ -77,6 +82,7 @@ myManageHook = composeAll
 
 myLayout = dwmStyle shrinkText defaultTheme
                 $ desktopLayoutModifiers
+                $ windowNavigation
                 $ layoutHook gnomeConfig
                 ||| custom
             where tall = ResizableTall 1 (3/100) (1/2) []
