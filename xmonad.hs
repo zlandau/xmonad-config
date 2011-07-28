@@ -23,6 +23,7 @@ import XMonad.Layout.WindowNavigation
 import XMonad.Prompt
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
+import XMonad.Prompt.Input
 import XMonad.Prompt.Workspace
 import XMonad.Util.Run ( spawnPipe )
 import XMonad.Util.Scratchpad
@@ -65,17 +66,24 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_b            ), spawn "tomboy --new-note" )
     , ((modm,               xK_f            ), gotoMenu )
     , ((modm .|. shiftMask, xK_f            ), bringMenu )
-    , ((modm,               xK_m            ), workspacePrompt defaultXPConfig (windows . W.view))
+    , ((modm .|. shiftMask, xK_a            ), inputPrompt defaultXPConfig "Workspace" ?+ addWorkspace )
+    , ((modm,               xK_r            ), renameWorkspace defaultXPConfig)
+    , ((modm .|. shiftMask, xK_r            ), removeWorkspace )
+    , ((modm,               xK_m            ), selectWorkspace defaultXPConfig )
     , ((modm .|. shiftMask, xK_m            ), workspacePrompt defaultXPConfig (windows . W.shift))
     , ((modm,               xK_w            ), goToSelected defaultGSConfig)
-    , ((modm,               xK_a            ), sendMessage $ JumpToLayout "term" )
     , ((modm .|. shiftMask, xK_Right), sendMessage $ Move R)
     , ((modm .|. shiftMask, xK_Left ), sendMessage $ Move L)
     , ((modm .|. shiftMask, xK_Up   ), sendMessage $ Move U)
     , ((modm .|. shiftMask, xK_Down ), sendMessage $ Move D)
     ]
 
-newKeys x = M.union (myKeys x) (keys gnomeConfig x)
+    ++
+    zip (zip (repeat (modm)) [xK_1..xK_9]) (map (withNthWorkspace W.greedyView) [0..])
+    ++
+    zip (zip (repeat (modm .|. shiftMask)) [xK_1..xK_9]) (map (withNthWorkspace W.shift) [0..])
+
+newKeys x = M.union (myKeys x) (keys desktopConfig x)
 
 myManageHook = composeAll
 	[ title     =? "Quick Tabs" --> doIgnore
