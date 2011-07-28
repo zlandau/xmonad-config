@@ -1,5 +1,6 @@
 import XMonad hiding ( (|||) )
 import XMonad.Actions.CycleWS
+import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.GridSelect
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.Search
@@ -7,7 +8,9 @@ import XMonad.Actions.SinkAll
 import XMonad.Actions.WindowBringer
 import XMonad.Config.Desktop
 import XMonad.Config.Gnome
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Combo
 import XMonad.Layout.DragPane
 import XMonad.Layout.DwmStyle
@@ -21,9 +24,11 @@ import XMonad.Prompt
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
 import XMonad.Prompt.Workspace
+import XMonad.Util.Run ( spawnPipe )
 import XMonad.Util.Scratchpad
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+import System.IO ( hPutStrLn )
 
 myWorkspaces =
 	[ "web"
@@ -83,7 +88,7 @@ myManageHook = composeAll
 myLayout = dwmStyle shrinkText defaultTheme
                 $ desktopLayoutModifiers
                 $ windowNavigation
-                $ layoutHook gnomeConfig
+                $ layoutHook desktopConfig
                 ||| custom
             where tall = ResizableTall 1 (3/100) (1/2) []
                   term = named "term" $ tall ****//* Full
@@ -92,11 +97,18 @@ myLayout = dwmStyle shrinkText defaultTheme
 
 main = do
   nScreens <- countScreens
-  xmonad $ gnomeConfig {
+  xmproc <- spawnPipe "xmobar"
+  xmonad $ withUrgencyHook NoUrgencyHook $ desktopConfig {
        modMask = mod4Mask,
        focusedBorderColor = "blue",
        workspaces = myWorkspaces,
        keys = newKeys,
-       manageHook = myManageHook <+> manageHook gnomeConfig,
-       layoutHook = myLayout
+       manageHook = myManageHook <+> manageHook desktopConfig,
+       layoutHook = myLayout,
+       logHook = dynamicLogWithPP $ xmobarPP
+                        { ppOutput = hPutStrLn xmproc
+                        , ppTitle = xmobarColor "green" "" . shorten 70
+                        -- , ppHiddenNoWindows = id
+                        , ppSort = fmap (.scratchpadFilterOutWorkspace) $ ppSort defaultPP
+                        }
   }
